@@ -2,9 +2,6 @@ package app;
 
 import annotations.NamicsFramework;
 
-import javax.xml.bind.JAXBException;
-import javax.xml.xpath.XPathExpressionException;
-
 public class App {
 
     public static void main (String args[]){

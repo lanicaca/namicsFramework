@@ -11,7 +11,7 @@ import java.io.*;
 
 public class XMLParser {
 
-    private static final String CONFIG_FILE = "src/main/resources/config.xml";
+    private static final String CONFIG_FILE = "xmlValueMap/src/main/resources/config.xml";
     private static final Logger log = Logger.getLogger(XMLParser.class);
     private static XMLParser instance = null;
     private XPath xPath;
@@ -29,7 +29,7 @@ public class XMLParser {
             doc.getDocumentElement().normalize();
             xPath = XPathFactory.newInstance().newXPath();
         } catch (ParserConfigurationException | IOException | SAXException e) {
-            log.error("Couldn't initialized XMLParser");
+            log.error("Couldn't initialized XMLParser - file doesn't exist or file path is wrong");
         }
     }
 
