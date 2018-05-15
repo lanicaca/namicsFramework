@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <entries>
-    <keyInt>12345</keyInt>
+    <keyIn>12345</keyIn>
     <keyString>StringValue</keyString>
-    <keyBoolean>false</keyBoolean>
-    <keyDouble>0.54</keyDouble>
+    <keyBoolean>true</keyBoolean>
+    <keyDouble>double</keyDouble>
     <keyColor>
         <Color>
-            <r>234</r>
-            <g>234</g>
-            <b>42</b>
+            <r>34</r><g>5</g><b>254</b>
         </Color>
     </keyColor>
 </entries>

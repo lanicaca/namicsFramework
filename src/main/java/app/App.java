@@ -1,17 +1,14 @@
 package app;
 
-import annotations.Init;
-import org.xml.sax.SAXException;
+import annotations.NamicsFramework;
 
 import javax.xml.bind.JAXBException;
-import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPathExpressionException;
-import java.io.IOException;
 
 public class App {
 
-    public static void main (String args[]) throws XPathExpressionException, IllegalAccessException, NoSuchFieldException, InstantiationException, JAXBException, IOException, ParserConfigurationException, SAXException {
-        new Init().init();
+    public static void main (String args[]){
+        NamicsFramework.init();
         TestClass testClass = new TestClass();
         System.out.println(testClass.getColor());
         System.out.println(testClass.getAnInt());
