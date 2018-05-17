@@ -10,6 +10,6 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>GetMain</servlet-name>
-        <url-pattern>/*</url-pattern>
+        <url-pattern>/test/*</url-pattern>
     </servlet-mapping>
 </web-app>

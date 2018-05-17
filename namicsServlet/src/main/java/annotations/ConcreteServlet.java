@@ -1,17 +1,20 @@
 package annotations;
 
+import sun.net.www.content.text.Generic;
+
 import java.util.Collection;
 
 @NamicsServlet(
-        path = "/path",
-        selector = "/file",
+        path = "/test",
+        selector = "/ConcreteClass",
         method = "GET",
         returns = "JSON"
 )
 public class ConcreteServlet implements MyServletInterface {
 
     @Override
-    public Collection<?> HandleRequest() {
-        return null;
+    public void handleRequest() {
+        System.out.println("ConcreteClass invoked");
     }
+
 }
