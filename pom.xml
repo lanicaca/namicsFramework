@@ -67,6 +67,16 @@
                 <artifactId>jetty-server</artifactId>
                 <version>${jettyVersion}</version>
             </dependency>
+            <dependency>
+                <groupId>org.codehaus.jackson</groupId>
+                <artifactId>jackson-mapper-asl</artifactId>
+                <version>1.9.13</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.dataformat</groupId>
+                <artifactId>jackson-dataformat-xml</artifactId>
+                <version>2.9.4</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -86,7 +96,7 @@
                                 <archive>
                                     <manifest>
                                         <mainClass>
-                                            app.App
+                                            app.TestClassData
                                         </mainClass>
                                     </manifest>
                                 </archive>

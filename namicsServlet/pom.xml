@@ -54,6 +54,14 @@
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-server</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-mapper-asl</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-xml</artifactId>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
@@ -70,7 +78,7 @@
                             <archive>
                                 <manifest>
                                     <mainClass>
-                                        app.App
+                                        app.TestClassData
                                     </mainClass>
                                 </manifest>
                             </archive>

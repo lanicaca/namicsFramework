@@ -56,7 +56,7 @@
                                 <archive>
                                     <manifest>
                                         <mainClass>
-                                            app.App
+                                            app.TestClassData
                                         </mainClass>
                                     </manifest>
                                 </archive>
