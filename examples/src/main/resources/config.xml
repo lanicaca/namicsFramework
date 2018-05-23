@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<entries>
+    <keyInt>12345</keyInt>
+    <keyString>StringValue</keyString>
+    <keyBoolean>true</keyBoolean>
+    <keyDouble>0.45</keyDouble>
+    <keyColor>
+        <Color>
+            <r>34</r>
+            <g>5543</g>
+            <b>254</b>
+        </Color>
+    </keyColor>
+    <newtestint>6</newtestint>
+    <keyTest>
+        <testclassdata>
+            <testint>23</testint>
+            <teststring>testString</teststring>
+            <testbool>true</testbool>
+        </testclassdata>
+    </keyTest>
+
+</entries>

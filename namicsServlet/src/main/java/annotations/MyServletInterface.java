@@ -5,5 +5,5 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public interface MyServletInterface {
-      Object handleRequest(HttpServletRequest request, HttpServletResponse response) throws IOException;
+    Object handleRequest(HttpServletRequest request, HttpServletResponse response) throws IOException;
 }

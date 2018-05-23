@@ -2,25 +2,40 @@ package annotations;
 
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import lombok.Getter;
+import lombok.Setter;
 import org.apache.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.reflections.Reflections;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Set;
 
+import org.apache.commons.io.FileUtils;
+
 public class MainServlet extends HttpServlet {
     private static final String METHOD_NAME = "handleRequest";
     private static final Logger log = Logger.getLogger(MainServlet.class);
     @Getter
+    private final String packageName;
+    @Getter
     private Set<Class<?>> annotatedClassesReflection;
     private ArrayList<AnnotatedClass> annotatedClasses;
+
+    //Constructor defines on which package the reflection is done
+    //is called when jetty server is started
+    public MainServlet(Class class_package) {
+        super();
+        this.packageName = class_package.getPackage().getName();
+    }
+
 
     @Override
     //Is automatically called just once, when the first HTTP request is called
@@ -31,9 +46,10 @@ public class MainServlet extends HttpServlet {
             log.error("Couldn't initialize MainServlet");
         }
         annotatedClasses = new ArrayList<>();
-        Reflections reflections = new Reflections("app.*");
+        Reflections reflections = new Reflections(this.getPackageName());
         //Get all annotated classes with NamicsServlet
         annotatedClassesReflection = reflections.getTypesAnnotatedWith(NamicsServlet.class);
+        if (annotatedClassesReflection.isEmpty()) log.warn("No classes annotated with NamicsServlet.class were found");
         //Make a list of -AnnotatedClass objects- from this -- see the class for attributes
         for (Class<?> c : annotatedClassesReflection) {
             NamicsServlet annotation = c.getAnnotation(NamicsServlet.class);
@@ -46,7 +62,6 @@ public class MainServlet extends HttpServlet {
     //Is automatically called by the servlet container each time the new HTTP request is sent,
     // to allow the servlet to respond to a request
     public void service(HttpServletRequest request, HttpServletResponse response) {
-        log.debug("Service started");
         //The flag that checks if the URI is wrong at the end of function
         boolean wrongURI = true;
         //the path and the selector must be written starting with "/",
@@ -58,7 +73,20 @@ public class MainServlet extends HttpServlet {
                 callMethod(c.getMethod(), request, response, c); //this function chooses the request method
             }
         }
-        if (wrongURI) log.warn("Wrong URI : " + request.getRequestURI());
+        if (wrongURI) { //check for the filepath
+            //If the URI is wrong, try to write file from that filepath as response
+            response.setContentType("text/html");
+            File myFile = new File(request.getRequestURI());
+            try {
+                response.getWriter().print(FileUtils.readFileToString(myFile));
+            } catch (IOException e) {
+                log.error(e.getMessage());
+                log.error("No such file : " + request.getRequestURI());
+                log.warn("Wrong URI : " + request.getRequestURI());
+                response.setStatus(404);
+            }
+        }
+        log.warn("Wrong URI : " + request.getRequestURI());
     }
 
     private void doGet(HttpServletRequest req, HttpServletResponse resp, AnnotatedClass annotatedClass) {
@@ -69,7 +97,7 @@ public class MainServlet extends HttpServlet {
             //see the function convertResponse
             resp.getWriter().append(convertResponse(resp, returnValue, annotatedClass.getReturns()));
         } catch (IOException e) {
-            log.error("Error in coverting and writing response");
+            log.error("Error in coverting and writing response: " + e.getMessage());
         }
     }
 
@@ -102,14 +130,13 @@ public class MainServlet extends HttpServlet {
                                 HttpServletRequest request, HttpServletResponse response) {
         try {
             //Implementation of reflection (invoking method from annotated class)
-            Object o = annotatedClass.getMyClass().newInstance();
             Method method = annotatedClass.getMyClass().getDeclaredMethod(myMethodName,
                     HttpServletRequest.class, HttpServletResponse.class);
             method.setAccessible(true);
             //this method can have arguments "request" and "response" and do something with it
-            return method.invoke(o, request, response);
-        } catch (IllegalAccessException | InvocationTargetException | InstantiationException | NoSuchMethodException e) {
-            log.error("Error in reflection - invoking method");
+            return method.invoke(annotatedClass.getMyClass().newInstance(), request, response);
+        } catch (IllegalAccessException | InstantiationException | InvocationTargetException | NoSuchMethodException e) {
+            log.error("Error in reflection - invoking method: " + e.getMessage());
         }
         log.error("Invoke method returns null");
         return null;
@@ -117,7 +144,7 @@ public class MainServlet extends HttpServlet {
 
     private String convertResponse(HttpServletResponse response, Object returnValue, String returns) throws IOException {
         switch (returns) {
-            //use of Jackson for both conversions
+            //use of Jackson library for both conversions
             case "JSON": {
                 response.setContentType("application/json");
                 ObjectMapper mapper = new ObjectMapper();

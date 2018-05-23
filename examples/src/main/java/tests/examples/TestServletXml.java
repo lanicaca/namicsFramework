@@ -1,22 +1,25 @@
-package app;
+package tests.examples;
 
 import annotations.MyServletInterface;
+import annotations.NamicsFramework;
 import annotations.NamicsServlet;
+import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @NamicsServlet(
         path = "/test",
-        selector = "/ConcreteServlet",
+        selector = "/myServletInterface",
         method = "GET",
         returns = "JSON"
 )
-public class ConcreteServletGet implements MyServletInterface {
+public class TestServletXml implements MyServletInterface {
+    private static final Logger log = Logger.getLogger(TestServletXml.class);
+
     @Override
     public Object handleRequest(HttpServletRequest request, HttpServletResponse response) {
-        //we can do something with request or/and response here
-        TestClassData testClassData = new TestClassData(5, "test", true);
-        return testClassData;
+        NamicsFramework.init(getClass());
+        return TestClass.getColor();
     }
 }
