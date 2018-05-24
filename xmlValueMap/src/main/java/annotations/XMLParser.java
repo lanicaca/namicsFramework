@@ -29,7 +29,7 @@ public class XMLParser {
             doc.getDocumentElement().normalize();
             xPath = XPathFactory.newInstance().newXPath();
         } catch (ParserConfigurationException | SAXException | IOException e) {
-            log.error("Couldn't initialized XMLParser - file doesn't exist or file path is wrong : "+e.getMessage());
+            log.error("Couldn't initialized XMLParser - file doesn't exist or file path is wrong : ",e);
         }
     }
 
