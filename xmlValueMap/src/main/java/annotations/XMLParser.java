@@ -8,10 +8,10 @@ import org.xml.sax.*;
 import javax.xml.parsers.*;
 import javax.xml.xpath.*;
 import java.io.*;
-
+//singleton
 public class XMLParser {
 
-    private static final String CONFIG_FILE = "xmlValueMap/src/main/resources/config.xml";
+    private static final String CONFIG_FILE = "/config.xml";
     private static final Logger log = Logger.getLogger(XMLParser.class);
     private static XMLParser instance = null;
     private XPath xPath;
@@ -19,23 +19,23 @@ public class XMLParser {
     @Getter
     private String parsedValue;
 
-    private XMLParser() {
+    private XMLParser(Class c) {
         try {
             //XPath definition and initialization
-            File inputFile = new File(CONFIG_FILE);
+            InputStream inputFile = c.getResourceAsStream(CONFIG_FILE);
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             doc = dBuilder.parse(inputFile);
             doc.getDocumentElement().normalize();
             xPath = XPathFactory.newInstance().newXPath();
-        } catch (ParserConfigurationException | IOException | SAXException e) {
-            log.error("Couldn't initialized XMLParser - file doesn't exist or file path is wrong");
+        } catch (ParserConfigurationException | SAXException | IOException e) {
+            log.error("Couldn't initialized XMLParser - file doesn't exist or file path is wrong : "+e.getMessage());
         }
     }
 
-    public static XMLParser getInstance() {
+    public static XMLParser getInstance(Class c) {
         if (instance == null) {
-            instance = new XMLParser();
+            instance = new XMLParser(c);
         }
         return instance;
     }

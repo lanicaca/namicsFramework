@@ -17,11 +17,13 @@ import java.io.StringReader;
 
 public class NamicsFramework {
     private static final Logger log = Logger.getLogger(NamicsFramework.class);
-    private static XMLParser xmlParser = XMLParser.getInstance();
-
-    public static void init() {
+    private static XMLParser xmlParser;
+    //initialization : finding annotated fields in a specified class's package
+    public static void init(Class c) {
         log.info("Initialization started");
-        Reflections reflections = new Reflections("app.*", new FieldAnnotationsScanner());
+        xmlParser = XMLParser.getInstance(c);
+        //making a field reflection on class's "c" package
+        Reflections reflections = new Reflections(c.getPackage().getName(), new FieldAnnotationsScanner());
         Set<Field> fieldsAnnotated = reflections.getFieldsAnnotatedWith(NamicsXmlValueMap.class);
         for (Field field : fieldsAnnotated) {
             try {
@@ -43,19 +45,14 @@ public class NamicsFramework {
                         JAXBContext context = JAXBContext.newInstance(field.getType());
                         Unmarshaller um = context.createUnmarshaller();
                         Object o = um.unmarshal(new StringReader(xmlParser.getParsedValue()));
+                        field.setAccessible(true);
                         field.set(field.getType(), o);
                     }
                 }
 
-            } catch (IllegalAccessException e) {
-                log.error("Couldn't set field, IllegalAccessException");
+            } catch (IllegalAccessException | JAXBException | XPathExpressionException e) {
                 log.info("Initialization failed");
-            } catch (JAXBException e) {
-                log.error("JAXB parser failed");
-                log.info("Initialization failed");
-            } catch (XPathExpressionException e) {
-                log.error("XPath parser failed");
-                log.info("Initialization failed");
+                log.error("!Initialization failed!: " + e.getMessage());
             }
         }
         log.info("Initialization ended");
