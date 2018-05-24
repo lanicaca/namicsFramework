@@ -34,7 +34,6 @@ public class NamicsFramework {
                         //Set field using XPath - simple fields
                         if (xmlParser.getParsedValue() == null) {
                             log.error("Bad parsing XML - ParsedValue is null");
-                            log.info("Initialization failed");
                             return;
                         }
                         field.setAccessible(true);
@@ -51,8 +50,7 @@ public class NamicsFramework {
                 }
 
             } catch (IllegalAccessException | JAXBException | XPathExpressionException e) {
-                log.info("Initialization failed");
-                log.error("!Initialization failed!: " + e.getMessage());
+                log.error("!Initialization failed!: ",e);
             }
         }
         log.info("Initialization ended");
