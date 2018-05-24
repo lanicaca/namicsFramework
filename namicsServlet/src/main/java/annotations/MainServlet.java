@@ -43,7 +43,7 @@ public class MainServlet extends HttpServlet {
         try {
             super.init();
         } catch (ServletException e) {
-            log.error("Couldn't initialize MainServlet");
+            log.error("Couldn't initialize MainServlet",e);
         }
         annotatedClasses = new ArrayList<>();
         Reflections reflections = new Reflections(this.getPackageName());
@@ -97,7 +97,7 @@ public class MainServlet extends HttpServlet {
             //see the function convertResponse
             resp.getWriter().append(convertResponse(resp, returnValue, annotatedClass.getReturns()));
         } catch (IOException e) {
-            log.error("Error in coverting and writing response: " + e.getMessage());
+            log.error("Error in coverting and writing response: ",e);
         }
     }
 
@@ -136,7 +136,7 @@ public class MainServlet extends HttpServlet {
             //this method can have arguments "request" and "response" and do something with it
             return method.invoke(annotatedClass.getMyClass().newInstance(), request, response);
         } catch (IllegalAccessException | InstantiationException | InvocationTargetException | NoSuchMethodException e) {
-            log.error("Error in reflection - invoking method: " + e.getMessage());
+            log.error("Error in reflection - invoking method: ",e);
         }
         log.error("Invoke method returns null");
         return null;
