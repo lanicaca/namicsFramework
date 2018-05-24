@@ -80,8 +80,7 @@ public class MainServlet extends HttpServlet {
             try {
                 response.getWriter().print(FileUtils.readFileToString(myFile));
             } catch (IOException e) {
-                log.error(e.getMessage());
-                log.error("No such file : " + request.getRequestURI());
+                log.error(e);
                 log.warn("Wrong URI : " + request.getRequestURI());
                 response.setStatus(404);
             }
