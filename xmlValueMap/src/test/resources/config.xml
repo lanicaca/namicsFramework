@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<entries>
+    <keyInt>12345</keyInt>
+    <keyString>StringValue</keyString>
+    <keyBoolean>true</keyBoolean>
+    <keyDouble>0.45</keyDouble>
+    <keyComplexObject>
+        <complexObject>
+            <testInt>
+                6789
+            </testInt>
+            <testStirng>
+                TestString
+            </testStirng>
+            <testBool>
+                false
+            </testBool>
+        </complexObject>
+    </keyComplexObject>
+</entries>
