@@ -1,8 +1,8 @@
-package annotations;
+package annotationsServlet;
 
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import lombok.Getter;
-import lombok.Setter;
+import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.reflections.Reflections;
@@ -18,8 +18,6 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Set;
 
-import org.apache.commons.io.FileUtils;
-
 public class MainServlet extends HttpServlet {
     private static final String METHOD_NAME = "handleRequest";
     private static final Logger log = Logger.getLogger(MainServlet.class);
@@ -31,6 +29,11 @@ public class MainServlet extends HttpServlet {
 
     //Constructor defines on which package the reflection is done
     //is called when jetty server is started
+    public MainServlet() {
+        super();
+        this.packageName = getClass().getPackage().getName();
+    }
+
     public MainServlet(Class class_package) {
         super();
         this.packageName = class_package.getPackage().getName();
@@ -43,7 +46,7 @@ public class MainServlet extends HttpServlet {
         try {
             super.init();
         } catch (ServletException e) {
-            log.error("Couldn't initialize MainServlet");
+            log.error("Couldn't initialize MainServlet",e);
         }
         annotatedClasses = new ArrayList<>();
         Reflections reflections = new Reflections(this.getPackageName());
@@ -76,14 +79,15 @@ public class MainServlet extends HttpServlet {
         if (wrongURI) { //check for the filepath
             //If the URI is wrong, try to write file from that filepath as response
             response.setContentType("text/html");
-            File myFile = new File(request.getRequestURI());
-            try {
-                response.getWriter().print(FileUtils.readFileToString(myFile));
-            } catch (IOException e) {
-                log.error(e.getMessage());
-                log.error("No such file : " + request.getRequestURI());
-                log.warn("Wrong URI : " + request.getRequestURI());
-                response.setStatus(404);
+            if (request.getRequestURI() != null) {
+                File myFile = new File(request.getRequestURI());
+                try {
+                    response.getWriter().print(FileUtils.readFileToString(myFile));
+                } catch (IOException e) {
+                    log.error("No such file : " + request.getRequestURI() , e);
+                    log.warn("Wrong URI : " + request.getRequestURI());
+                    response.setStatus(404);
+                }
             }
         }
         log.warn("Wrong URI : " + request.getRequestURI());
@@ -97,7 +101,7 @@ public class MainServlet extends HttpServlet {
             //see the function convertResponse
             resp.getWriter().append(convertResponse(resp, returnValue, annotatedClass.getReturns()));
         } catch (IOException e) {
-            log.error("Error in coverting and writing response: " + e.getMessage());
+            log.error("Error in converting and writing response: " , e);
         }
     }
 
@@ -113,21 +117,8 @@ public class MainServlet extends HttpServlet {
         doGet(req, resp, annotatedClass);
     }
 
-    private void doHead(HttpServletRequest req, HttpServletResponse resp, AnnotatedClass annotatedClass) {
-        doGet(req, resp, annotatedClass);
-    }
-
-    private void doOptions(HttpServletRequest req, HttpServletResponse resp, AnnotatedClass annotatedClass) {
-        doGet(req, resp, annotatedClass);
-    }
-
-    private void doTrace(HttpServletRequest req, HttpServletResponse resp, AnnotatedClass annotatedClass) {
-        doGet(req, resp, annotatedClass);
-    }
-
-
-    private Object invokeMethod(AnnotatedClass annotatedClass, String myMethodName,
-                                HttpServletRequest request, HttpServletResponse response) {
+    Object invokeMethod(AnnotatedClass annotatedClass, String myMethodName,
+                        HttpServletRequest request, HttpServletResponse response) {
         try {
             //Implementation of reflection (invoking method from annotated class)
             Method method = annotatedClass.getMyClass().getDeclaredMethod(myMethodName,
@@ -136,13 +127,13 @@ public class MainServlet extends HttpServlet {
             //this method can have arguments "request" and "response" and do something with it
             return method.invoke(annotatedClass.getMyClass().newInstance(), request, response);
         } catch (IllegalAccessException | InstantiationException | InvocationTargetException | NoSuchMethodException e) {
-            log.error("Error in reflection - invoking method: " + e.getMessage());
+            log.error("Error in reflection - invoking method: " ,e);
         }
         log.error("Invoke method returns null");
         return null;
     }
 
-    private String convertResponse(HttpServletResponse response, Object returnValue, String returns) throws IOException {
+    String convertResponse(HttpServletResponse response, Object returnValue, String returns) throws IOException {
         switch (returns) {
             //use of Jackson library for both conversions
             case "JSON": {
@@ -183,22 +174,6 @@ public class MainServlet extends HttpServlet {
                 case "GET": {
                     doGet(request, response, annotatedClass);
                     log.debug("doGet method called");
-                    break;
-                }
-                case "HEAD": {
-                    doHead(request, response, annotatedClass);
-                    log.debug("doHead method called");
-                    ;
-                    break;
-                }
-                case "OPTION": {
-                    doOptions(request, response, annotatedClass);
-                    log.debug("doOption method called");
-                    break;
-                }
-                case "TRACE": {
-                    doTrace(request, response, annotatedClass);
-                    log.debug("doTrace method called");
                     break;
                 }
             }

@@ -1,4 +1,4 @@
-package tests.examples;
+package annotations;
 
 import lombok.Data;
 
@@ -8,23 +8,22 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @Data
-@XmlRootElement(name = "testclassdata")
+@XmlRootElement(name = "complexObject")
 @XmlAccessorType(XmlAccessType.FIELD)
-
-public class TestClassData {
-    @XmlElement(name = "testint")
+class TestComplexObject {
+    @XmlElement(name = "testInt")
     private int anInt;
-    @XmlElement(name = "teststring")
+    @XmlElement(name = "testString")
     private String string;
-    @XmlElement(name = "testbool")
+    @XmlElement(name = "testBool")
     private boolean aBoolean;
 
-    public TestClassData() {
-    }
-
-    public TestClassData(int anInt, String string, boolean aBoolean) {
+    public TestComplexObject(int anInt, String string, boolean aBoolean) {
         this.anInt = anInt;
         this.string = string;
         this.aBoolean = aBoolean;
+    }
+
+    public TestComplexObject() {
     }
 }

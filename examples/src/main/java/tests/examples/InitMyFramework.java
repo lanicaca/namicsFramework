@@ -1,18 +1,13 @@
 package tests.examples;
 
-import annotations.MainServlet;
-import annotations.NamicsFramework;
-import org.apache.log4j.Logger;
-import org.mortbay.jetty.Connector;
-import org.mortbay.jetty.Server;
-import org.mortbay.jetty.nio.SelectChannelConnector;
-import org.mortbay.jetty.servlet.Context;
-import org.mortbay.jetty.servlet.ServletHolder;
+//import annotations.MainServlet;
+//import annotations.NamicsFramework;
+//import org.apache.log4j.Logger;
 
 //singleton
 public class InitMyFramework {
 
-    private static final Logger log = Logger.getLogger(InitMyFramework.class);
+    /*private static final Logger log = Logger.getLogger(InitMyFramework.class);
     private static InitMyFramework instance = null;
 
     private InitMyFramework() {
@@ -38,7 +33,7 @@ public class InitMyFramework {
             server.start();
         } catch (Exception e) {
             log.info("Couldn't initialize jetty server");
-            log.error("Couldn't initialize jetty server : "+e.getMessage());
+            log.error("Couldn't initialize jetty server : ",e);
         }
-    }
+    }*/
 }

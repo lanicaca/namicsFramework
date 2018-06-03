@@ -1,7 +1,5 @@
-package tests.examples;
+package annotationsServlet;
 
-import annotations.MyServletInterface;
-import annotations.NamicsServlet;
 import annotations.NamicsXmlValueMap;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,13 +12,12 @@ import javax.servlet.http.HttpServletResponse;
         returns = "JSON"
 )
 public class ConcreteServletGet implements MyServletInterface {
-    @NamicsXmlValueMap(key = "newtestint")
-    private static int mytestint;
+    @NamicsXmlValueMap(key = "newTestInt")
+    private int myTestInt;
 
     @Override
     public Object handleRequest(HttpServletRequest request, HttpServletResponse response) {
         //we can do something with request or/and response here
-        TestClassData testClassData = new TestClassData(mytestint, "test", true);
-        return testClassData;
+        return new TestClassData(myTestInt, "get", true);
     }
 }

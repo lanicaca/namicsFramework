@@ -6,15 +6,24 @@
     <keyDouble>0.45</keyDouble>
     <keyComplexObject>
         <complexObject>
-            <testInt>
-                6789
-            </testInt>
-            <testStirng>
-                TestString
-            </testStirng>
-            <testBool>
-                false
-            </testBool>
+            <testInt>6789</testInt>
+            <testString>TestString</testString>
+            <testBool>false</testBool>
         </complexObject>
     </keyComplexObject>
+    <keyColor>
+        <Color>
+            <r>34</r>
+            <g>5543</g>
+            <b>254</b>
+        </Color>
+    </keyColor>
+    <newtestint>6</newtestint>
+    <keyTest>
+        <testclassdata>
+            <testint>23</testint>
+            <teststring>testString</teststring>
+            <testbool>true</testbool>
+        </testclassdata>
+    </keyTest>
 </entries>

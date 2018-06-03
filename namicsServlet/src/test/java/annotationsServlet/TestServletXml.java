@@ -1,8 +1,6 @@
-package tests.examples;
+package annotationsServlet;
 
-import annotations.MyServletInterface;
 import annotations.NamicsFramework;
-import annotations.NamicsServlet;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +17,7 @@ public class TestServletXml implements MyServletInterface {
 
     @Override
     public Object handleRequest(HttpServletRequest request, HttpServletResponse response) {
-        NamicsFramework.init(getClass());
+        new NamicsFramework().init(getClass());
         return TestClass.getColor();
     }
 }

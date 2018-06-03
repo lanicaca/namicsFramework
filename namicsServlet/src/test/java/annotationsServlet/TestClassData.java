@@ -1,4 +1,4 @@
-package namics.internship.xml.tests;
+package annotationsServlet;
 
 import lombok.Data;
 
@@ -8,9 +8,10 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @Data
-@XmlRootElement(name = "complexObject")
+@XmlRootElement(name = "testClassData")
 @XmlAccessorType(XmlAccessType.FIELD)
-class TestComplexObject {
+
+public class TestClassData {
     @XmlElement(name = "testInt")
     private int anInt;
     @XmlElement(name = "testString")
@@ -18,11 +19,12 @@ class TestComplexObject {
     @XmlElement(name = "testBool")
     private boolean aBoolean;
 
-    public TestComplexObject(int anInt, String string, boolean aBoolean) {
+    public TestClassData() {
+    }
+
+    public TestClassData(int anInt, String string, boolean aBoolean) {
         this.anInt = anInt;
         this.string = string;
         this.aBoolean = aBoolean;
     }
-
-    public TestComplexObject() {}
 }

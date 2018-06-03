@@ -1,16 +1,16 @@
-package annotations;
+package annotationsServlet;
 
 import lombok.Data;
 
 @Data
-public class AnnotatedClass {
+class AnnotatedClass {
     private String path;
     private String selector;
     private String method;
     private String returns;
     private Class<?> myClass;
 
-    public AnnotatedClass(String path, String selector, String method, String returns, Class<?> myClass) {
+    AnnotatedClass(String path, String selector, String method, String returns, Class<?> myClass) {
         this.path = path;
         this.selector = selector;
         this.method = method;
