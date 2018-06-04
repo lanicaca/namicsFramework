@@ -47,6 +47,7 @@ public class XMLParser {
             xPath = XPathFactory.newInstance().newXPath();
         } catch (ParserConfigurationException | SAXException | IOException e) {
             log.error("Couldn't initialized XMLParser - file doesn't exist or file path is wrong : ", e);
+
         }
     }
 

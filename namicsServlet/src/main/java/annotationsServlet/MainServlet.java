@@ -128,6 +128,7 @@ public class MainServlet extends HttpServlet {
             return method.invoke(annotatedClass.getMyClass().newInstance(), request, response);
         } catch (IllegalAccessException | InstantiationException | InvocationTargetException | NoSuchMethodException e) {
             log.error("Error in reflection - invoking method: " ,e);
+
         }
         log.error("Invoke method returns null");
         return null;

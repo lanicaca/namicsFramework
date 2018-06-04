@@ -26,12 +26,10 @@ public class NamicsFramework {
     public void init(Class c) {
         log.info("Initialization started");
         xmlParser = XMLParser.getInstance(c);
-        log.debug(" WHAT?   "+xmlParser.getParsedValue() + "    parsed value in init");
         //making a field reflection on class's "c" package
         Reflections reflections = new Reflections(c.getPackage().getName(), new FieldAnnotationsScanner());
         Set<Field> fieldsAnnotated = reflections.getFieldsAnnotatedWith(NamicsXmlValueMap.class);
         for (Field field : fieldsAnnotated) {
-            log.debug(" WHAT?   "+xmlParser.getParsedValue() + "    fields annotated");
             isComplex = xmlParser.IsComplex(field.getAnnotation(NamicsXmlValueMap.class).key());
             setField(field);
         }
@@ -40,14 +38,9 @@ public class NamicsFramework {
 
     public void setField(Field field){
         try {
-            log.debug(" WHAT?   "+xmlParser.getParsedValue() + "     try");
             //only static fields
             if (java.lang.reflect.Modifier.isStatic(field.getModifiers())) {
-
-                log.debug(" WHAT?   "+xmlParser.getParsedValue() + "     static");
                 if (!isComplex) {
-                    // xmlParser.setParsedValue();
-                    log.debug(" WHAT?   "+xmlParser.getParsedValue() + "      isNOTcomplex???");
                     //Set field using XPath - simple fields
                     if (xmlParser.getParsedValue() == null) {
                         log.error("Bad parsing XML - ParsedValue is null");
@@ -58,7 +51,6 @@ public class NamicsFramework {
                     field.set(field.getType(), ConvertUtils.convert(xmlParser.getParsedValue(), field.getType()));
 
                 } else {
-                    log.debug(" WHAT?   "+xmlParser.getParsedValue() + "    IS COMPLEX");
                     // Set field using JAXB - complex fields
                     JAXBContext context = JAXBContext.newInstance(field.getType());
                     Unmarshaller um = context.createUnmarshaller();
@@ -66,6 +58,7 @@ public class NamicsFramework {
                     field.setAccessible(true);
                     field.set(field.getType(), o);
                 }
+
             }
 
         } catch (IllegalAccessException | JAXBException e) {
