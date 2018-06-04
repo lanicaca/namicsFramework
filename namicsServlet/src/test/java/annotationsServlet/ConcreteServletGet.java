@@ -1,6 +1,7 @@
 package annotationsServlet;
 
 import annotations.NamicsXmlValueMap;
+import lombok.Getter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,12 +13,12 @@ import javax.servlet.http.HttpServletResponse;
         returns = "JSON"
 )
 public class ConcreteServletGet implements MyServletInterface {
+    @Getter
     @NamicsXmlValueMap(key = "newTestInt")
-    private int myTestInt;
+    private static int myTestInt;
 
     @Override
     public Object handleRequest(HttpServletRequest request, HttpServletResponse response) {
-        //we can do something with request or/and response here
         return new TestClassData(myTestInt, "get", true);
     }
 }

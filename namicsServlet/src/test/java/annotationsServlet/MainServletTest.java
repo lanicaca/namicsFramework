@@ -1,5 +1,6 @@
 package annotationsServlet;
 
+import annotations.NamicsFramework;
 import org.eclipse.jetty.util.IO;
 import org.junit.Assert;
 import org.junit.Before;
@@ -36,15 +37,17 @@ public class MainServletTest extends Mockito {
         MockitoAnnotations.initMocks(this);
         mainServlet = new MainServlet(getClass());
         mainServlet.init();
+        new NamicsFramework().init(getClass());
     }
 
     @Test
     public void mainServletTests() {
+        //no xmlValueMap initialized - annotated field get default values
         Assert.assertTrue(mainServletTestWithMockito("GET", "/test/ConcreteServlet", "get"));
         Assert.assertTrue(mainServletTestWithMockito("POST", "/test/ConcreteServlet", "post"));
         Assert.assertTrue(mainServletTestWithMockito("PUT", "/test/ConcreteServlet", "put"));
         Assert.assertTrue(mainServletTestWithMockito("DELETE", "/test/ConcreteServlet", "delete"));
-        //Assert.assertTrue(mainServletTestWithMockito("GET", "/test/myServletInterface", "5543"));
+        Assert.assertTrue(mainServletTestWithMockito("GET", "/test/myServletInterface", "5543"));
         Assert.assertTrue(mainServletTestWithMockito("GET", "/Users/mdundic/Desktop/myFramework/examples/src/index.html", "My html example"));
         Assert.assertTrue(mainServletTestWithMockito(mockMethod, mockURI, ""));
     }
@@ -86,6 +89,7 @@ public class MainServletTest extends Mockito {
             e.printStackTrace();
         }
         mainServlet.service(request, response);
+        System.out.println("servlet result for : "+  path + " for method "  + method + " result "  +servletResult.toString());
         return servletResult.toString().contains(result);
     }
 
