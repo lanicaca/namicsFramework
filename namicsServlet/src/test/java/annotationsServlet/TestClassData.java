@@ -1,4 +1,4 @@
-package tests.examples;
+package annotationsServlet;
 
 import lombok.Data;
 
@@ -8,15 +8,15 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @Data
-@XmlRootElement(name = "testclassdata")
+@XmlRootElement(name = "testClassData")
 @XmlAccessorType(XmlAccessType.FIELD)
 
 public class TestClassData {
-    @XmlElement(name = "testint")
+    @XmlElement(name = "testInt")
     private int anInt;
-    @XmlElement(name = "teststring")
+    @XmlElement(name = "testString")
     private String string;
-    @XmlElement(name = "testbool")
+    @XmlElement(name = "testBool")
     private boolean aBoolean;
 
     public TestClassData() {

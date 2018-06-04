@@ -1,4 +1,4 @@
-package tests.examples;
+package annotationsServlet;
 
 import annotations.NamicsXmlValueMap;
 import lombok.Data;

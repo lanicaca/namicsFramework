@@ -1,7 +1,5 @@
-package tests.examples;
+package annotationsServlet;
 
-import annotations.MyServletInterface;
-import annotations.NamicsServlet;
 import annotations.NamicsXmlValueMap;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +18,6 @@ public class ConcreteServletPost implements MyServletInterface {
     @Override
     public Object handleRequest(HttpServletRequest request, HttpServletResponse response) {
         //we can do something with request or/and response here
-        return testClassData;
+        return new TestClassData(123, "post", false);
     }
 }
