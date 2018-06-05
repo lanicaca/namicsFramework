@@ -39,7 +39,7 @@ public class MainServletTest extends Mockito {
         MockitoAnnotations.initMocks(this);
         mainServlet = new MainServlet(getClass());
         mainServlet.init();
-        new NamicsFramework().init(getClass());
+        NamicsFramework.init(getClass());
     }
 
     @Test
@@ -50,7 +50,7 @@ public class MainServletTest extends Mockito {
         Assert.assertTrue(mainServletTestWithMockito("PUT", "/test/ConcreteServlet", "put"));
         Assert.assertTrue(mainServletTestWithMockito("DELETE", "/test/ConcreteServlet", "delete"));
         Assert.assertTrue(mainServletTestWithMockito("GET", "/test/myServletInterface", "5543"));
-        //Assert.assertTrue(mainServletTestWithMockito("GET", classpath+"/examples/src/index.html", "My html example"));
+        Assert.assertTrue(mainServletTestWithMockito("GET", classpath+"/examples/src/index.html", "My html example"));
         Assert.assertTrue(mainServletTestWithMockito(mockMethod, mockURI, ""));
     }
 
