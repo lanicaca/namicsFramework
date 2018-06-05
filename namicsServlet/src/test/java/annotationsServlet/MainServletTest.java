@@ -1,7 +1,6 @@
 package annotationsServlet;
 
 import annotations.NamicsFramework;
-import org.eclipse.jetty.util.IO;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -29,11 +28,14 @@ public class MainServletTest extends Mockito {
     private String mockMethod = "anymethod";
     private String mockURI = "anyURI";
     private String mockString = "anyOtherString";
+    private static String classpath ;
 
     private MainServlet mainServlet;
 
     @Before
     public void setUp() {
+        classpath = (this.getClass().getClassLoader().getResource("config.xml").toString()).substring(5,39);
+        System.out.println(classpath); // //should be the location of project directory myFramework
         MockitoAnnotations.initMocks(this);
         mainServlet = new MainServlet(getClass());
         mainServlet.init();
@@ -48,7 +50,7 @@ public class MainServletTest extends Mockito {
         Assert.assertTrue(mainServletTestWithMockito("PUT", "/test/ConcreteServlet", "put"));
         Assert.assertTrue(mainServletTestWithMockito("DELETE", "/test/ConcreteServlet", "delete"));
         Assert.assertTrue(mainServletTestWithMockito("GET", "/test/myServletInterface", "5543"));
-        Assert.assertTrue(mainServletTestWithMockito("GET", "/Users/mdundic/Desktop/myFramework/examples/src/index.html", "My html example"));
+        Assert.assertTrue(mainServletTestWithMockito("GET", classpath+"/examples/src/index.html", "My html example"));
         Assert.assertTrue(mainServletTestWithMockito(mockMethod, mockURI, ""));
     }
 
