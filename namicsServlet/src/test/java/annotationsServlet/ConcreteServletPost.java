@@ -12,8 +12,6 @@ import javax.servlet.http.HttpServletResponse;
         returns = "XML"
 )
 public class ConcreteServletPost implements MyServletInterface {
-    @NamicsXmlValueMap(key = "keyTest")
-    private static TestClassData testClassData;
 
     @Override
     public Object handleRequest(HttpServletRequest request, HttpServletResponse response) {

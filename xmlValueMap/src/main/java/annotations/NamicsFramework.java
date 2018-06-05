@@ -19,24 +19,23 @@ public class NamicsFramework {
     @Getter
     @Setter
     private static XMLParser xmlParser;
-    @Getter
-    boolean isComplex;
+
     //initialization : finding annotated fields in a specified class's package
 
-    public void init(Class c) {
+    public static void init(Class c) {
         log.info("Initialization started");
         xmlParser = XMLParser.getInstance(c);
         //making a field reflection on class's "c" package
         Reflections reflections = new Reflections(c.getPackage().getName(), new FieldAnnotationsScanner());
         Set<Field> fieldsAnnotated = reflections.getFieldsAnnotatedWith(NamicsXmlValueMap.class);
         for (Field field : fieldsAnnotated) {
-            isComplex = xmlParser.IsComplex(field.getAnnotation(NamicsXmlValueMap.class).key());
-            setField(field);
+            boolean isComplex = xmlParser.IsComplex(field.getAnnotation(NamicsXmlValueMap.class).key());
+            setField(field, isComplex);
         }
         log.info("Initialization ended");
     }
 
-    public void setField(Field field){
+    public static void setField(Field field, boolean isComplex){
         try {
             //only static fields
             if (java.lang.reflect.Modifier.isStatic(field.getModifiers())) {

@@ -13,11 +13,8 @@ import javax.servlet.http.HttpServletResponse;
         returns = "JSON"
 )
 public class TestServletXml implements MyServletInterface {
-    private static final Logger log = Logger.getLogger(TestServletXml.class);
-
     @Override
     public Object handleRequest(HttpServletRequest request, HttpServletResponse response) {
-        new NamicsFramework().init(getClass());
         return TestClass.getColor();
     }
 }
