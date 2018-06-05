@@ -28,14 +28,11 @@ public class MainServletTest extends Mockito {
     private String mockMethod = "anymethod";
     private String mockURI = "anyURI";
     private String mockString = "anyOtherString";
-    private static String classpath ;
-
     private MainServlet mainServlet;
+    public static final String projectPath= System.getProperty("user.dir").replaceFirst("/namicsServlet", "");
 
     @Before
     public void setUp() {
-        classpath = (this.getClass().getClassLoader().getResource("config.xml").toString()).substring(5).replaceFirst("/namicsServlet/target/classes/config.xml", "");
-        System.out.println(classpath); // //should be the location of project directory myFramework
         MockitoAnnotations.initMocks(this);
         mainServlet = new MainServlet(getClass());
         mainServlet.init();
@@ -50,7 +47,7 @@ public class MainServletTest extends Mockito {
         Assert.assertTrue(mainServletTestWithMockito("PUT", "/test/ConcreteServlet", "put"));
         Assert.assertTrue(mainServletTestWithMockito("DELETE", "/test/ConcreteServlet", "delete"));
         Assert.assertTrue(mainServletTestWithMockito("GET", "/test/myServletInterface", "5543"));
-        Assert.assertTrue(mainServletTestWithMockito("GET", classpath+"/examples/src/index.html", "My html example"));
+        Assert.assertTrue(mainServletTestWithMockito("GET", projectPath+"/examples/src/index.html", "My html example"));
         Assert.assertTrue(mainServletTestWithMockito(mockMethod, mockURI, ""));
     }
 
