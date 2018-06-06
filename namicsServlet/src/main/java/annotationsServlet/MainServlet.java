@@ -66,14 +66,14 @@ public class MainServlet extends HttpServlet {
     // to allow the servlet to respond to a request
     public void service(HttpServletRequest request, HttpServletResponse response) {
         //The flag that checks if the URI is wrong at the end of function
-        boolean wrongURI = true;
+        boolean wrongURI = true; //TODO replace all of this with Java Streams
         //the path and the selector must be written starting with "/",
         //this can be changed easily if there is need for any other format
-        for (AnnotatedClass c : annotatedClasses) {
+        for (AnnotatedClass c : annotatedClasses) { //TODO replace all of this with Java Streams
             String URI = c.getPath() + c.getSelector();
             if (URI.equals(request.getRequestURI())) {
                 wrongURI = false; //at least one class is annotated with this URI
-                callMethod(c.getMethod(), request, response, c); //this function chooses the request method
+                forwardToHttpMethod(c.getMethod(), request, response, c); //this function chooses the request method
             }
         }
         if (wrongURI) { //check for the filepath
@@ -152,8 +152,8 @@ public class MainServlet extends HttpServlet {
         return null;
     }
 
-    private void callMethod(String methodName, HttpServletRequest request, HttpServletResponse response,
-                            AnnotatedClass annotatedClass) {
+    private void forwardToHttpMethod(String methodName, HttpServletRequest request, HttpServletResponse response,
+                                     AnnotatedClass annotatedClass) {
         //checks if the class is annotated with the same method that is requested
         if (annotatedClass.getMethod().equals(request.getMethod())) {
             switch (methodName) {

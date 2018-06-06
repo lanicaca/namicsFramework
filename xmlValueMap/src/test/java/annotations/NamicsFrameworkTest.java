@@ -24,13 +24,13 @@ public class NamicsFrameworkTest extends Mockito {
     @Mock private XMLParser xmlParser;
     private static Field field;
 
- /*   @Test
+    @Test
     public void namicsFrameWorkSetFieldGetParsedValueReturnsNull(){
         NamicsFramework.setXmlParser(xmlParser);
         System.out.println(xmlParser.toString());
         when(xmlParser.getParsedValue()).thenReturn(null);
         System.out.println(xmlParser.getParsedValue());
-    }*/
+    }
 
     @Test
     public void injectMyValuesFromConfigToTestClass() {
