@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.Set;
 
 public class MainServlet extends HttpServlet {
@@ -65,32 +66,29 @@ public class MainServlet extends HttpServlet {
     //Is automatically called by the servlet container each time the new HTTP request is sent,
     // to allow the servlet to respond to a request
     public void service(HttpServletRequest request, HttpServletResponse response) {
-        //The flag that checks if the URI is wrong at the end of function
-        boolean wrongURI = true; //TODO replace all of this with Java Streams
         //the path and the selector must be written starting with "/",
         //this can be changed easily if there is need for any other format
-        for (AnnotatedClass c : annotatedClasses) { //TODO replace all of this with Java Streams
-            String URI = c.getPath() + c.getSelector();
-            if (URI.equals(request.getRequestURI())) {
-                wrongURI = false; //at least one class is annotated with this URI
-                forwardToHttpMethod(c.getMethod(), request, response, c); //this function chooses the request method
-            }
-        }
-        if (wrongURI) { //check for the filepath
-            //If the URI is wrong, try to write file from that filepath as response
+
+        Optional<String> flag = annotatedClasses.stream()
+                .map(c -> c.getPath() + c.getSelector())
+                .filter(p -> p.equals(request.getRequestURI()))
+                .findAny();
+
+        if (flag.isPresent()) {
+            annotatedClasses.stream()
+                    .filter(c -> (c.getPath() + c.getSelector()).equals(request.getRequestURI()))
+                    .forEach(c -> forwardToHttpMethod(c.getMethod(), request, response, c));
+        } else {
             response.setContentType("text/html");
             if (request.getRequestURI() != null) {
                 File myFile = new File(request.getRequestURI());
                 try {
                     response.getWriter().print(FileUtils.readFileToString(myFile));
                 } catch (IOException e) {
-                    log.error("No such file : " + request.getRequestURI() , e);
-                    log.warn("Wrong URI : " + request.getRequestURI());
-                    response.setStatus(404);
+                    log.error("No such file : " + request.getRequestURI(), e);
                 }
             }
         }
-        log.warn("Wrong URI : " + request.getRequestURI());
     }
 
     private void doGet(HttpServletRequest req, HttpServletResponse resp, AnnotatedClass annotatedClass) {
@@ -156,6 +154,8 @@ public class MainServlet extends HttpServlet {
                                      AnnotatedClass annotatedClass) {
         //checks if the class is annotated with the same method that is requested
         if (annotatedClass.getMethod().equals(request.getMethod())) {
+            log.debug("URL : "+ request.getRequestURL());
+            log.debug("URI : "+ request.getRequestURI());
             switch (methodName) {
                 case "DELETE": {
                     doDelete(request, response, annotatedClass);
