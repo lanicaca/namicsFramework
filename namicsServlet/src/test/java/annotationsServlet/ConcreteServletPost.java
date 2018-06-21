@@ -11,10 +11,10 @@ import javax.servlet.http.HttpServletResponse;
         method = "POST",
         returns = "XML"
 )
-public class ConcreteServletPost implements MyServletInterface {
+public class ConcreteServletPost implements MyServletInterface<TestClassData> {
 
     @Override
-    public Object handleRequest(HttpServletRequest request, HttpServletResponse response) {
+    public TestClassData handleRequest(HttpServletRequest request, HttpServletResponse response) {
         //we can do something with request or/and response here
         return new TestClassData(123, "post", false);
     }

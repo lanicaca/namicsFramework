@@ -42,11 +42,11 @@ public class MainServletTest extends Mockito {
     @Test
     public void mainServletTests() {
         //no xmlValueMap initialized - annotated field get default values
-        Assert.assertTrue(mainServletTestWithMockito("GET", "/test/ConcreteServlet", "get"));
-        Assert.assertTrue(mainServletTestWithMockito("POST", "/test/ConcreteServlet", "post"));
+        Assert.assertTrue(mainServletTestWithMockito("GET", "/test/ConcreteServlet", "\"anInt\":6,\"string\":\"get\",\"aboolean\":true"));
+        Assert.assertTrue(mainServletTestWithMockito("POST", "/test/ConcreteServlet", "<TestClassData><anInt>123</anInt><string>post</string><aboolean>false</aboolean></TestClassData>"));
         Assert.assertTrue(mainServletTestWithMockito("PUT", "/test/ConcreteServlet", "put"));
         Assert.assertTrue(mainServletTestWithMockito("DELETE", "/test/ConcreteServlet", "delete"));
-        Assert.assertTrue(mainServletTestWithMockito("GET", "/test/myServletInterface", "5543"));
+        Assert.assertTrue(mainServletTestWithMockito("GET", "/test/myServletInterface", "\"r\":34,\"g\":5543,\"b\":254"));
         Assert.assertTrue(mainServletTestWithMockito("GET", projectPath+"/examples/src/index.html", "My html example"));
         Assert.assertTrue(mainServletTestWithMockito(mockMethod, mockURI, ""));
     }

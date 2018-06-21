@@ -18,7 +18,7 @@ public class ConcreteServletGet implements MyServletInterface {
     private static int myTestInt;
 
     @Override
-    public Object handleRequest(HttpServletRequest request, HttpServletResponse response) {
+    public TestClassData handleRequest(HttpServletRequest request, HttpServletResponse response) {
         return new TestClassData(myTestInt, "get", true);
     }
 }

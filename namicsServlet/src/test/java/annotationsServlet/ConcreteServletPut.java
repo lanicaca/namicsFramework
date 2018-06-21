@@ -13,7 +13,7 @@ import java.io.IOException;
 public class ConcreteServletPut implements MyServletInterface {
 
     @Override
-    public Object handleRequest(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public String handleRequest(HttpServletRequest request, HttpServletResponse response) throws IOException {
         return "put";
     }
 }
