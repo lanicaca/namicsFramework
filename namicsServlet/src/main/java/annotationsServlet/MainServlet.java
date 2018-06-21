@@ -16,8 +16,10 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class MainServlet extends HttpServlet {
     private static final String METHOD_NAME = "handleRequest";
@@ -68,25 +70,23 @@ public class MainServlet extends HttpServlet {
     public void service(HttpServletRequest request, HttpServletResponse response) {
         //the path and the selector must be written starting with "/",
         //this can be changed easily if there is need for any other format
+        List<AnnotatedClass> collect = annotatedClasses.stream()
+                .filter(c -> (c.getPath() + c.getSelector()).equals(request.getRequestURI()))
+                .collect(Collectors.toList());
+        collect.forEach(c -> forwardToHttpMethod(c.getMethod(), request, response, c));
+        if (collect.isEmpty()){
+            forwardToFIleSystem(request, response);
+        }
+    }
 
-        Optional<String> flag = annotatedClasses.stream()
-                .map(c -> c.getPath() + c.getSelector())
-                .filter(p -> p.equals(request.getRequestURI()))
-                .findAny();
-
-        if (flag.isPresent()) {
-            annotatedClasses.stream()
-                    .filter(c -> (c.getPath() + c.getSelector()).equals(request.getRequestURI()))
-                    .forEach(c -> forwardToHttpMethod(c.getMethod(), request, response, c));
-        } else {
-            response.setContentType("text/html");
-            if (request.getRequestURI() != null) {
-                File myFile = new File(request.getRequestURI());
-                try {
-                    response.getWriter().print(FileUtils.readFileToString(myFile));
-                } catch (IOException e) {
-                    log.error("No such file : " + request.getRequestURI(), e);
-                }
+    private void forwardToFIleSystem(HttpServletRequest request, HttpServletResponse response) {
+        response.setContentType("text/html");
+        if (request.getRequestURI() != null) {
+            File myFile = new File(request.getRequestURI());
+            try {
+                response.getWriter().print(FileUtils.readFileToString(myFile));
+            } catch (IOException e) {
+                log.error("No such file : " + request.getRequestURI(), e);
             }
         }
     }
