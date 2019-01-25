@@ -16,6 +16,7 @@ public class InitMyFramework {
     private static InitMyFramework instance = null;
 
     private InitMyFramework() {
+        // starts Jetty Server
         NamicsFramework.init(MainServlet.class);
         startJetty(MainServlet.class);
     }

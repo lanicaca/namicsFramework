@@ -2,7 +2,6 @@ package annotations;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -10,26 +9,16 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import java.lang.reflect.Field;
-
 @RunWith(MockitoJUnitRunner.class)
 public class NamicsFrameworkTest extends Mockito {
+
+    @Mock private XMLParser xmlParser;
 
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
         NamicsFramework.init(getClass());
-    }
-
-    @Mock private XMLParser xmlParser;
-    private static Field field;
-
-    @Test
-    public void namicsFrameWorkSetFieldGetParsedValueReturnsNull(){
         NamicsFramework.setXmlParser(xmlParser);
-        System.out.println(xmlParser.toString());
-        when(xmlParser.getParsedValue()).thenReturn(null);
-        System.out.println(xmlParser.getParsedValue());
     }
 
     @Test
@@ -41,6 +30,5 @@ public class NamicsFrameworkTest extends Mockito {
         Assert.assertEquals("TestString", TestClass.getTestComplexObject().getString());
         Assert.assertFalse(TestClass.getTestComplexObject().isABoolean());
     }
-
 
 }

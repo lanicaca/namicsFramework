@@ -25,13 +25,12 @@ public class XMLParserTest extends Mockito {
     @Test
     public void isComplex() {
         Assert.assertTrue(testXmlParser.IsComplex("keyComplexObject"));
-       Assert.assertEquals(testXmlParser.getParsedValue(),
-                "<complexObject><testInt>6789</testInt><testString>TestString</testString><testBool>false</testBool></complexObject>");
+        Assert.assertEquals(testXmlParser.getParsedValue(),"<complexObject><testInt>6789</testInt><testString>" +
+                "TestString</testString><testBool>false</testBool></complexObject>");
         Assert.assertTrue(!testXmlParser.IsComplex("keyInt"));
         Assert.assertEquals(testXmlParser.getParsedValue(), "12345");
         Assert.assertTrue(!testXmlParser.IsComplex("NoSuchKey"));
         Assert.assertNull(testXmlParser.getParsedValue());
     }
-
 
 }
