@@ -6,7 +6,6 @@ import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.log4j.Logger;
 import org.reflections.Reflections;
 import org.reflections.scanners.FieldAnnotationsScanner;
-
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
@@ -21,7 +20,6 @@ public class NamicsFramework {
     private static XMLParser xmlParser;
 
     //initialization : finding annotated fields in a specified class's package
-
     public static void init(Class c) {
         log.info("Initialization started");
         xmlParser = XMLParser.getInstance(c);
@@ -48,7 +46,6 @@ public class NamicsFramework {
                     }
                     field.setAccessible(true);
                     field.set(field.getType(), ConvertUtils.convert(xmlParser.getParsedValue(), field.getType()));
-
                 } else {
                     // Set field using JAXB - complex fields
                     JAXBContext context = JAXBContext.newInstance(field.getType());
@@ -57,12 +54,9 @@ public class NamicsFramework {
                     field.setAccessible(true);
                     field.set(field.getType(), o);
                 }
-
             }
-
         } catch (IllegalAccessException | JAXBException e) {
             log.error("!Initialization failed!",e);
         }
     }
 }
-
