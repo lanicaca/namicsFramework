@@ -17,5 +17,4 @@ class AnnotatedClass {
         this.returns = returns;
         this.myClass = myClass;
     }
-
 }
