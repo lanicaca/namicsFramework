@@ -41,7 +41,6 @@ public class MainServlet extends HttpServlet {
         this.packageName = class_package.getPackage().getName();
     }
 
-
     @Override
     //Is automatically called just once, when the first HTTP request is called
     public void init() {
@@ -125,7 +124,6 @@ public class MainServlet extends HttpServlet {
             return method.invoke(annotatedClass.getMyClass().newInstance(), request, response);
         } catch (IllegalAccessException | InstantiationException | InvocationTargetException | NoSuchMethodException e) {
             log.error("Error in reflection - invoking method: " ,e);
-
         }
         log.error("Invoke method returns null");
         return null;
