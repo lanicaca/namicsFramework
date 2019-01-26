@@ -56,7 +56,6 @@ public class MainServletTest extends Mockito {
         when(mainServlet.invokeMethod(annotatedClass, mockMethod, request, response)).thenThrow(NullPointerException.class);
     }
 
-
     @Test
     public void convertResponse() throws IOException {
             Assert.assertNull(mainServlet.convertResponse(response, mockString, mockString));
@@ -68,7 +67,6 @@ public class MainServletTest extends Mockito {
     public void destroy() {
         mainServlet.destroy();
     }
-
 
     private StringWriter createResponseWriterMockup() throws IOException {
         StringWriter servletResult = new StringWriter();
@@ -91,5 +89,4 @@ public class MainServletTest extends Mockito {
         System.out.println("servlet result for : "+  path + " for method "  + method + " result "  +servletResult.toString());
         return servletResult.toString().contains(result);
     }
-
 }
