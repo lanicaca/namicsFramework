@@ -31,5 +31,4 @@ public class XMLParserTest extends Mockito {
         Assert.assertTrue(!testXmlParser.IsComplex("NoSuchKey"));
         Assert.assertNull(testXmlParser.getParsedValue());
     }
-
 }
