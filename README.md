@@ -85,7 +85,13 @@ The output should look like this:
 2019-01-26 04:06:25.680:INFO::Started SelectChannelConnector@0.0.0.0:8080
 ```
 
-Now the Jetty server and the application is up and running. To stop press ``` Ctrl + C ```.
+Now the Jetty server and the application are up and running.  
+Check if you can reach ``` index.html ``` from examples module by typing in browser:
+ ```localhost:8080/{$path}/namicsFramework/examples/src/index.html```
+ 
+ 
+ To stop server press ``` Ctrl + C ```.
+
 
 You can also start the application from IDE by running ```main``` method from ``` namicsFramework/examples/src/main/java/tests/examples/MainApp.java ```
 
