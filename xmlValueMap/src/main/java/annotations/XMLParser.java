@@ -1,52 +1,65 @@
 package annotations;
 
 import lombok.Getter;
+import lombok.Setter;
 import org.apache.log4j.Logger;
-import org.w3c.dom.*;
-import org.xml.sax.*;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
-import javax.xml.parsers.*;
-import javax.xml.xpath.*;
-import java.io.*;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpressionException;
+import javax.xml.xpath.XPathFactory;
+import java.io.IOException;
+import java.io.InputStream;
 
+//singleton
 public class XMLParser {
 
-    private static final String CONFIG_FILE = "xmlValueMap/src/main/resources/config.xml";
+    private static final String CONFIG_FILE = "/config.xml";
     private static final Logger log = Logger.getLogger(XMLParser.class);
+    @Getter
     private static XMLParser instance = null;
+    InputStream inputFile;
+    @Getter
     private XPath xPath;
+    @Getter
     private Document doc;
     @Getter
+    @Setter
     private String parsedValue;
+    @Getter
+    private Node myNode;
 
-    private XMLParser() {
+    private XMLParser(Class c) {
         try {
             //XPath definition and initialization
-            File inputFile = new File(CONFIG_FILE);
+            InputStream inputFile = c.getResourceAsStream(CONFIG_FILE);
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             doc = dBuilder.parse(inputFile);
             doc.getDocumentElement().normalize();
             xPath = XPathFactory.newInstance().newXPath();
-        } catch (ParserConfigurationException | IOException | SAXException e) {
-            log.error("Couldn't initialized XMLParser - file doesn't exist or file path is wrong");
+        } catch (ParserConfigurationException | SAXException | IOException e) {
+            log.error("Couldn't initialized XMLParser - file doesn't exist or file path is wrong : ", e);
+
         }
     }
 
-    public static XMLParser getInstance() {
+    public static XMLParser getInstance(Class c) {
         if (instance == null) {
-            instance = new XMLParser();
+            instance = new XMLParser(c);
         }
         return instance;
     }
 
-    private NodeList nodeList() throws XPathExpressionException {
-        // Make nodelist of all keys under tag entries
-        return ((NodeList) xPath.compile("entries").evaluate(doc, XPathConstants.NODESET)).item(0).getChildNodes();
-    }
-
     // make string exactly the same as in .xml file
-    private StringBuffer getTextValueOfXmlNode(Node node) {
+    public StringBuffer getTextValueOfXmlNode(Node node) {
         //String buffer contains <node_name>
         StringBuffer textValue = new StringBuffer("<" + node.getNodeName() + ">");
         for (int j = 0; j < node.getChildNodes().getLength(); j++) {
@@ -66,8 +79,18 @@ public class XMLParser {
     }
 
     //check if attribute is complex and put it's value in "value"
-    public boolean IsComplex(String key) throws XPathExpressionException {
-        NodeList myNodeList = this.nodeList();
+    public boolean IsComplex(String key) {
+        NodeList myNodeList = null;
+        try {
+            myNodeList = ((NodeList) xPath
+                    .compile("entries")
+                    .evaluate(doc, XPathConstants.NODESET))
+                    .item(0)
+                    .getChildNodes();
+        } catch (XPathExpressionException e) {
+            log.error("Xml entries must be under tag <entries>", e);
+        }
+
         for (int i = 0; i < myNodeList.getLength(); i++) {
             Node n = myNodeList.item(i);
             //find the key in xml which is given in function
