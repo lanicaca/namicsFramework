@@ -144,7 +144,7 @@ int b;
 ```
 
 
-*Task:* Add new annotation '@NamicsServlet' to namicsFramework that will implement Java Jetty servlet.  
+*Task:* Add new annotation ```@NamicsServlet``` to namicsFramework that will implement Java Jetty servlet.  
 Default Java servlet should be hidden in the background. The annotated class should subscribe to HTTP requests from the main servlet based on annotation ```@NamicsServlet```.  
 The main servlet should reroute requests to annotated classes and process response if needed.  
 Fields in annotation are :  
