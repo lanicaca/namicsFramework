@@ -20,6 +20,4 @@ class TestClass {
     @Getter
     @NamicsXmlValueMap(key = "keyBoolean")
     public static boolean myBoolean;
-
-
 }
