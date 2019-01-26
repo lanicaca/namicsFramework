@@ -1,7 +1,5 @@
 package annotationsServlet;
 
-import annotations.NamicsXmlValueMap;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
