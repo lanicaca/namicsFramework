@@ -87,7 +87,7 @@ The output should look like this:
 
 Now the Jetty server and the application are up and running.  
 Check if you can reach ``` index.html ``` from examples module by typing in browser:
- ```localhost:8080/{$path}/namicsFramework/examples/src/index.html```
+ ```localhost:8080/{$path}/reflectoFramework/examples/src/index.html```
  
  
  To stop server press ``` Ctrl + C ```.
