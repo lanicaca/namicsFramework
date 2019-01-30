@@ -51,12 +51,12 @@ public class MainServlet extends HttpServlet {
         }
         annotatedClasses = new ArrayList<>();
         Reflections reflections = new Reflections(this.getPackageName());
-        //Get all annotated classes with NamicsServlet
-        annotatedClassesReflection = reflections.getTypesAnnotatedWith(NamicsServlet.class);
-        if (annotatedClassesReflection.isEmpty()) log.warn("No classes annotated with NamicsServlet.class were found");
+        //Get all annotated classes with reflectoServlet
+        annotatedClassesReflection = reflections.getTypesAnnotatedWith(ReflectoServlet.class);
+        if (annotatedClassesReflection.isEmpty()) log.warn("No classes annotated with reflectoServlet.class were found");
         //Make a list of -AnnotatedClass objects- from this -- see the class for attributes
         for (Class<?> c : annotatedClassesReflection) {
-            NamicsServlet annotation = c.getAnnotation(NamicsServlet.class);
+            ReflectoServlet annotation = c.getAnnotation(ReflectoServlet.class);
             annotatedClasses.add(new AnnotatedClass(annotation.path(), annotation.selector(), annotation.method(), annotation.returns(), c));
         }
         log.info("Main servlet initialized");

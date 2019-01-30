@@ -1,6 +1,6 @@
 package annotationsServlet;
 
-import annotations.NamicsFramework;
+import annotations.ReflectoFramework;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -29,14 +29,14 @@ public class MainServletTest extends Mockito {
     private String mockURI = "anyURI";
     private String mockString = "anyOtherString";
     private MainServlet mainServlet;
-    public static final String projectPath= System.getProperty("user.dir").replaceFirst("/namicsServlet", "");
+    public static final String projectPath= System.getProperty("user.dir").replaceFirst("/reflectoServlet", "");
 
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
         mainServlet = new MainServlet(getClass());
         mainServlet.init();
-        NamicsFramework.init(getClass());
+        ReflectoFramework.init(getClass());
     }
 
     @Test

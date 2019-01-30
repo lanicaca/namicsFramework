@@ -4,16 +4,16 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>internship</groupId>
-    <artifactId>namicsFramework</artifactId>
+    <artifactId>reflectoFramework</artifactId>
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>xmlValueMap</module>
-        <module>namicsServlet</module>
+        <module>reflectoServlet</module>
         <module>examples</module>
     </modules>
     <packaging>pom</packaging>
 
-    <name>namicsFramework</name>
+    <name>reflectoFramework</name>
     <url>http://maven.apache.org</url>
 
 

@@ -1,12 +1,12 @@
 package annotationsServlet;
 
-import annotations.NamicsXmlValueMap;
+import annotations.ReflectoXmlValueMap;
 import lombok.Getter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@NamicsServlet(
+@ReflectoServlet(
         path = "/test",
         selector = "/ConcreteServlet",
         method = "GET",
@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 )
 public class ConcreteServletGet implements MyServletInterface {
     @Getter
-    @NamicsXmlValueMap(key = "newTestInt")
+    @ReflectoXmlValueMap(key = "newTestInt")
     private static int myTestInt;
 
     @Override

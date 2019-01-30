@@ -10,15 +10,15 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
-public class NamicsFrameworkTest extends Mockito {
+public class ReflectoFrameworkTest extends Mockito {
 
     @Mock private XMLParser xmlParser;
 
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        NamicsFramework.init(getClass());
-        NamicsFramework.setXmlParser(xmlParser);
+        ReflectoFramework.init(getClass());
+        ReflectoFramework.setXmlParser(xmlParser);
     }
 
     @Test

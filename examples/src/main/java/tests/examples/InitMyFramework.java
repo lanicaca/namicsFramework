@@ -1,6 +1,6 @@
 package tests.examples;
 
-import annotations.NamicsFramework;
+import annotations.ReflectoFramework;
 import annotationsServlet.MainServlet;
 import org.apache.log4j.Logger;
 import org.mortbay.jetty.Connector;
@@ -17,7 +17,7 @@ public class InitMyFramework {
 
     private InitMyFramework() {
         // starts Jetty Server
-        NamicsFramework.init(MainServlet.class);
+        ReflectoFramework.init(MainServlet.class);
         startJetty(MainServlet.class);
     }
 

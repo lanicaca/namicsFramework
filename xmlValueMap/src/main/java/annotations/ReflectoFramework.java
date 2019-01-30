@@ -13,8 +13,8 @@ import java.io.StringReader;
 import java.lang.reflect.Field;
 import java.util.Set;
 
-public class NamicsFramework {
-    private static final Logger log = Logger.getLogger(NamicsFramework.class);
+public class ReflectoFramework {
+    private static final Logger log = Logger.getLogger(ReflectoFramework.class);
     @Getter
     @Setter
     private static XMLParser xmlParser;
@@ -25,9 +25,9 @@ public class NamicsFramework {
         xmlParser = XMLParser.getInstance(c);
         //making a field reflection on class's "c" package
         Reflections reflections = new Reflections(c.getPackage().getName(), new FieldAnnotationsScanner());
-        Set<Field> fieldsAnnotated = reflections.getFieldsAnnotatedWith(NamicsXmlValueMap.class);
+        Set<Field> fieldsAnnotated = reflections.getFieldsAnnotatedWith(ReflectoXmlValueMap.class);
         for (Field field : fieldsAnnotated) {
-            boolean isComplex = xmlParser.IsComplex(field.getAnnotation(NamicsXmlValueMap.class).key());
+            boolean isComplex = xmlParser.IsComplex(field.getAnnotation(ReflectoXmlValueMap.class).key());
             setField(field, isComplex);
         }
         log.info("Initialization ended");

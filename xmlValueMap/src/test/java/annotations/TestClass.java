@@ -6,18 +6,18 @@ import lombok.Getter;
 @Data
 class TestClass {
     @Getter
-    @NamicsXmlValueMap(key = "keyComplexObject")
+    @ReflectoXmlValueMap(key = "keyComplexObject")
     public static TestComplexObject testComplexObject;
     @Getter
-    @NamicsXmlValueMap(key = "keyInt")
+    @ReflectoXmlValueMap(key = "keyInt")
     public static int anInt;
     @Getter
-    @NamicsXmlValueMap(key = "keyString")
+    @ReflectoXmlValueMap(key = "keyString")
     public static String string;
     @Getter
-    @NamicsXmlValueMap(key = "keyDouble")
+    @ReflectoXmlValueMap(key = "keyDouble")
     public static Double aDouble;
     @Getter
-    @NamicsXmlValueMap(key = "keyBoolean")
+    @ReflectoXmlValueMap(key = "keyBoolean")
     public static boolean myBoolean;
 }

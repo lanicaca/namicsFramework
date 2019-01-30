@@ -1,4 +1,4 @@
-# Namics Framework
+# Reflecto Framework
 
 Framework for Java servlets inspired by Spring framework.
 
@@ -10,16 +10,16 @@ Internship role: AEM (Adobe Experience Manager) Engineer
 ## About project
 
 
-Implementation of core features that AEM /Java web application relies on by creating mini AEM/Spring like framework named 'namicsFramework'.
+Implementation of core features that AEM /Java web application relies on by creating mini AEM/Spring like framework named 'reflectoFramework'.
 
 Maven multi-module project.
 
-Annotation ```@NamicsXmlValueMap``` injects values from XML file (map.xml) into a variable.
+Annotation ```@reflectoXmlValueMap``` injects values from XML file (map.xml) into a variable.
 Reflection is able to recognize and create objects based on XML structure.  
-```MainServlet``` is the main servlet of the application. Default Java servlet is hidden in the background. Classes annotated with ```@NamicsServlet``` are subscribed to HTTP requests from the ```MainServlet```.
+```MainServlet``` is the main servlet of the application. Default Java servlet is hidden in the background. Classes annotated with ```@reflectoServlet``` are subscribed to HTTP requests from the ```MainServlet```.
 
 
-```@NamicsServlet``` has the following fields :  
+```@reflectoServlet``` has the following fields :  
 ```path``` - path (URL) for servlet  
 ```selector``` - name of the file  
 ```returns``` - format of the file that the main servlet converts to and writes the content on the page (``` JSON ```, ``` XML ```)  
@@ -68,7 +68,7 @@ Install project by running following Maven command from root folder:
 $ mvn clean install
 ```
 
-The jar file is packed in ```namicsFramework/examples/target```. 
+The jar file is packed in ```reflectoFramework/examples/target```. 
 ```
 $ cd examples/target
 $ ls
@@ -87,11 +87,11 @@ The output should look like this:
 
 Now the Jetty server and the application is up and running. To stop press ``` Ctrl + C ```.
 
-You can also start the application from IDE by running ```main``` method from ``` namicsFramework/examples/src/main/java/tests/examples/MainApp.java ```
+You can also start the application from IDE by running ```main``` method from ``` reflectoFramework/examples/src/main/java/tests/examples/MainApp.java ```
 
 ## Tests
 
-Tests are written for ```namicsServlet``` and ```xmlValueMap```.
+Tests are written for ```reflectoServlet``` and ```xmlValueMap```.
 Tests automatically start the server and cover basic case scenarios by simulating sending HTTP requests. Test coverage: >80%.
 
 
@@ -106,16 +106,16 @@ author :  [Stefan Dragisic](https://github.com/stefanvozd)
 **Content:** Some of the advanced Java features are explained in this section. All of these features are crucial to understanding
 mechanisms behind modern Java web application.  
 **Goal:** Goal is to understand and can independently implement core features that AEM /Java web application relies on.  
-At the end of this section, intern will create mini AEM/Spring like framework named ```namicsFramework```.
+At the end of this section, intern will create mini AEM/Spring like framework named ```reflectoFramework```.
 
 
 *Task:* Implement small framework that support value injecting from an XML file.  
-Make a maven multi-module project named namicsFramework and implement an annotation called ``` @NamicsXmlValueMap ``` that will inject values from the XML file (map.xml) into a variable.  
+Make a maven multi-module project named reflectoFramework and implement an annotation called ``` @reflectoXmlValueMap ``` that will inject values from the XML file (map.xml) into a variable.  
 Example of annotation usage:  
 ```
-@NamicsXmlValueMap
+@reflectoXmlValueMap
 private String key1;
-@NamicsXmlValueMap
+@reflectoXmlValueMap
 private Color key2;
 ```  
 Example of xml file:  
@@ -134,7 +134,7 @@ Reflection is supposed to be able to recognize and create objects based on XML s
 
 Example of injected object:
 ```
-@NamicsXmlValueMap
+@reflectoXmlValueMap
 private Color key2;
 class Color {
 int r;
@@ -144,8 +144,8 @@ int b;
 ```
 
 
-*Task:* Add new annotation ```@NamicsServlet``` to namicsFramework that will implement Java Jetty servlet.  
-Default Java servlet should be hidden in the background. The annotated class should subscribe to HTTP requests from the main servlet based on annotation ```@NamicsServlet```.  
+*Task:* Add new annotation ```@reflectoServlet``` to reflectoFramework that will implement Java Jetty servlet.  
+Default Java servlet should be hidden in the background. The annotated class should subscribe to HTTP requests from the main servlet based on annotation ```@reflectoServlet```.  
 The main servlet should reroute requests to annotated classes and process response if needed.  
 Fields in annotation are :  
 ```path``` - represents path (URL) for  servlet  
@@ -155,7 +155,7 @@ Fields in annotation are :
 
 Example of  servlet usage:  
 ```
-@NamicsServlet(  
+@reflectoServlet(  
  path = "/myfolder",
  selector = "myselector",
  returns = "json",
@@ -172,15 +172,15 @@ For the example above, the servlet should be called only if a user goes to URL: 
 calls GET method.  
 
 
-*Task:* Add the feature to ```namicsFramework``` so that if the path does not exist, the main servlet checks the local path.
+*Task:* Add the feature to ```reflectoFramework``` so that if the path does not exist, the main servlet checks the local path.
 For example, if the requested path is: localhost/myfolder/index.html, and there is no  servlet registered to this path,
 the dispatcher should go to the local path and get the index.html file and output file the response.
 
 
-*Task:* Use ```@NamicsXmlValueMap``` annotation in servlet.  
+*Task:* Use ```@reflectoXmlValueMap``` annotation in servlet.  
 Example code:  
 ```
-@NamicsServlet(
+@reflectoServlet(
  path = "/myfolder",
  selectors = {
  "color"
@@ -189,7 +189,7 @@ Example code:
  methods = "GET",
 )
 class MyClass extends MyServletInterface {
-    @NamicsXmlValueMap
+    @reflectoXmlValueMap
     private Color color;
  ...
  
